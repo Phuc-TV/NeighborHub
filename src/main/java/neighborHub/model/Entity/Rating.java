@@ -17,18 +17,18 @@ public class Rating {
     private int rateId;
 
     @ManyToOne
-    @JoinColumn(name = "bookingId", nullable = false)
+    @JoinColumn(name = "bookingId", nullable = true)
     private Booking booking;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private int userRating;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String userComment;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private int driverRating;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String driverComment;
 }

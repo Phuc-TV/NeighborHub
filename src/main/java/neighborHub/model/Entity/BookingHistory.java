@@ -18,12 +18,12 @@ public class BookingHistory {
     private int historyId;
 
     @ManyToOne
-    @JoinColumn(name = "bookingId", nullable = false)
+    @JoinColumn(name = "bookingId", nullable = true)
     private Booking booking;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String status;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private LocalDate updateTime;
 }

@@ -16,41 +16,41 @@ public class RegistrationForm {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int registrationId;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String driversLicenseNumber;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String driversLicenseImgFront;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String driversLicenseImgBack;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String lltpImg;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String vehicleRegistrationImg;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private LocalDate healthCheckDay;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String vehicleInsuranceImgFront;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String vehicleInsuranceImgBack;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String tin;
 
     @ManyToOne
     @JoinColumn(name = "driverId", nullable = false)
     private Driver driver;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private int totalStar;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private int status;
 }
 

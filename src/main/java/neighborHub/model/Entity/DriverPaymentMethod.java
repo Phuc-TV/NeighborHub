@@ -15,13 +15,13 @@ public class DriverPaymentMethod {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int paymentId;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private int paymentType;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String bankNumber;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private float totalAmount;
 
     @ManyToOne

@@ -17,29 +17,29 @@ public class Booking {
     private int bookingId;
 
     @ManyToOne
-    @JoinColumn(name = "userId", nullable = false)
+    @JoinColumn(name = "userId", nullable = true)
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "registrationId", nullable = false)
+    @JoinColumn(name = "registrationId", nullable = true)
     private RegistrationForm registration;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String pickupLocation;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String dropoffLocation;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private int pickupTime;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private int dropoffTime;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private int distance;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private int status;
 
     @ManyToMany

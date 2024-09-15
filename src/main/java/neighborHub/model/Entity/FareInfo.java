@@ -15,10 +15,10 @@ public class FareInfo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int fareInfoId;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private int commissionRate;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private int vatRate;
 }
 

@@ -12,7 +12,7 @@ public interface AccessTokenRepository extends JpaRepository<AccessToken, Intege
                         inner join User u on u.userId = t.user.userId
                         where u.userId = :userId and (t.expired = false or t.revoked = false)
             """)
-    List<AccessToken> findAllValidTokensByUser(Long userId);
+    List<AccessToken> findAllValidTokensByUser(long userId);
 
     AccessToken findByToken(String accessToken);
 }
