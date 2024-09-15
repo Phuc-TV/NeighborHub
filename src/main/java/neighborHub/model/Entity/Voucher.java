@@ -18,14 +18,20 @@ public class Voucher {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int voucherId;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String code;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String description;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
+    private float discount;
+
+    @Column(nullable = true)
     private LocalDate expiryDate;
+
+    @Column(nullable = true)
+    private boolean status;
 
     @ManyToMany(mappedBy = "vouchers")
     private List<Booking> bookings;

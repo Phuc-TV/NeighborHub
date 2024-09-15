@@ -17,22 +17,22 @@ public class FarePrice {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int fareId;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String vehicleType;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private float fareMin2km;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private float fareNextKm;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private float travelTimeFare;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private LocalDate updateDate;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String updateBy;
 }
 

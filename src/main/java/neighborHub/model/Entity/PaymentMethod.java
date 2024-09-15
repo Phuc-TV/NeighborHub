@@ -15,14 +15,14 @@ public class PaymentMethod {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int paymentId;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String paymentType;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String transactionId;
 
     @ManyToOne
-    @JoinColumn(name = "userId", nullable = false)
+    @JoinColumn(name = "userId", nullable = true)
     private User user;
 }
 

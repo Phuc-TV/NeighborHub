@@ -21,37 +21,37 @@ public class Payment {
     @JoinColumn(name = "bookingId", nullable = false)
     private Booking booking;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String transactionId;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private int paymentTypeId;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private float paymentAmount;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private LocalDate paymentDate;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String paymentStatus;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String description;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private float actualCost;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private float discountAmount;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private float finalAmount;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String currency;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private int Status;
 }
 

@@ -16,13 +16,13 @@ public class UserVoucher {
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "userId", nullable = false)
+    @JoinColumn(name = "userId", nullable = true)
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "voucherId", nullable = false)
+    @JoinColumn(name = "voucherId", nullable = true)
     private Voucher voucher;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private boolean isUsed;
 }

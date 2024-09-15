@@ -13,26 +13,23 @@ import lombok.*;
 public class Driver {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long driverId;
+    private Long driverId;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String username;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String phone;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String email;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private int averageRating;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private float revenue;
 
-    @Column(nullable = false)
-    private String password;
-
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String role;
 }

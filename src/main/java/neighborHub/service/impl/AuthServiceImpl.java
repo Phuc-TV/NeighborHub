@@ -59,7 +59,7 @@ public class AuthServiceImpl implements AuthService {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginDto.getPhoneOrEmail(), loginDto.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        User user = userRepository.findByUsernameOrEmail(loginDto.getPhoneOrEmail(), loginDto.getPhoneOrEmail())
+        User user = userRepository.findByPhoneOrEmail(loginDto.getPhoneOrEmail(), loginDto.getPhoneOrEmail())
                 .orElseThrow(() -> new ApiException(HttpStatus.BAD_REQUEST, "User not found"));
         String accessToken = jwtTokenProvider.generateAccessToken(authentication);
         String refreshToken = jwtTokenProvider.generateRefreshToken(authentication);
@@ -120,27 +120,32 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public String userSignup(SignupDto signupDto) {
-
-        // add check if username already exists
+        // Kiểm tra nếu username đã tồn tại
         if (userRepository.existsByUsername(signupDto.getUsername())) {
             throw new ApiException(HttpStatus.BAD_REQUEST, "Username is already exist!");
         }
 
-        // add check if email already exists
+        // Kiểm tra nếu phone đã tồn tại
         if (userRepository.existsByPhone(signupDto.getPhone())) {
-            throw new ApiException(HttpStatus.BAD_REQUEST, "PhoneNumber is already exist!");
+            throw new ApiException(HttpStatus.BAD_REQUEST, "Phone number is already exist!");
         }
 
         User user = modelMapper.map(signupDto, User.class);
 
-        user.setPassword(passwordEncoder.encode(signupDto.getPassword()));
+        // Đặt giá trị mặc định cho email nếu null
+        if (user.getEmail() == null) {
+            user.setEmail(""); // Hoặc một giá trị mặc định khác
+        }
 
+        user.setStatus(true);
+        user.setPassword(passwordEncoder.encode(signupDto.getPassword()));
         user.setRole("user");
 
         userRepository.save(user);
 
         return "User registered successfully!";
     }
+
 
     @Override
     public AuthenticationResponse refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -161,7 +166,7 @@ public class AuthServiceImpl implements AuthService {
                 //map user to authentication
                 Authentication userAuthentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 var accessToken = jwtTokenProvider.generateAccessToken(userAuthentication);
-                User user = this.userRepository.findByUsernameOrEmail(username, username).orElseThrow();
+                User user = this.userRepository.findByPhoneOrEmail(username, username).orElseThrow();
                 revokeAllUserAccessTokens(user);
                 saveUserAccessToken(user, accessToken, token);
                 return AuthenticationResponse.builder()
