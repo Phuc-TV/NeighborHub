@@ -30,7 +30,8 @@ public class VoucherServiceImpl implements VoucherService {
         List<Voucher> voucherList = voucherRepository.findAll();
         if (voucherList == null)
             return null;
-        List<VoucherDtoResponse> vouchers = voucherList.stream().map(voucherList1 -> modelMapper.map(voucherList1, VoucherDtoResponse.class)).toList();
+        List<VoucherDtoResponse> vouchers = voucherList.stream()
+                .map(voucherList1 -> modelMapper.map(voucherList1, VoucherDtoResponse.class)).toList();
         return vouchers;
     }
 

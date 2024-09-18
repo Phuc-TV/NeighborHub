@@ -28,11 +28,5 @@ public class FarePrice {
 
     @Column(nullable = true)
     private float travelTimeFare;
-
-    @Column(nullable = true)
-    private LocalDate updateDate;
-
-    @Column(nullable = true)
-    private String updateBy;
 }
 
