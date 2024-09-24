@@ -30,9 +30,7 @@ public class OTPController {
     @GetMapping("/sendSMS/{toMobileNo}/{text}")
     public ResponseEntity sendSMS(@PathVariable("toMobileNo") String toMobileNo,@PathVariable("text") String text)
     {
-        Twilio.init("AC9f2b6937529cb1fc1788577bfb76e315", "652a91e25d4c6fd76c2282d813f22ac3");
 
-        Message.creator(new PhoneNumber(toMobileNo), new PhoneNumber("+18565954733") ,text).create();
 
         return new ResponseEntity("message sent successfully", HttpStatus.OK);
     }
