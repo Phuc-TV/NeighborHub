@@ -38,4 +38,8 @@ public class Voucher {
 
     @OneToMany(mappedBy = "voucher")
     private List<UserVoucher> userVouchers;
+
+    @OneToMany(mappedBy = "voucher")
+    private List<BookingVoucher> bookingVouchers;
+
 }

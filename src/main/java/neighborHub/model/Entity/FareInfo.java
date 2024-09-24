@@ -13,7 +13,7 @@ import lombok.*;
 public class FareInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int fareInfoId;
+    private Long fareInfoId;
 
     @Column(nullable = true)
     private int commissionRate;

@@ -10,7 +10,7 @@ public interface VoucherService {
 
     VoucherDtoResponse createVoucher(VoucherDtoRequest voucher);
 
-    VoucherDtoResponse updateVoucher(VoucherDtoRequest voucher, Long id);
+    VoucherDtoResponse updateVoucher(VoucherDtoRequest voucher, int id);
 
-    Boolean deleteVoucher(Long id);
+    Boolean deleteVoucher(int id);
 }

@@ -29,7 +29,8 @@ public class UserServiceImpl implements UserService {
         List<User> userList = userRepository.findAll();
         if (userList == null)
             return null;
-        List<UserDto> users = userList.stream().map(userList1 -> modelMapper.map(userList1, UserDto.class)).toList();
+        List<UserDto> users = userList.stream()
+                .map(userList1 -> modelMapper.map(userList1, UserDto.class)).toList();
         return users;
     }
 

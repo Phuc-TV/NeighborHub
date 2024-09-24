@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Entity
 @Table(name = "Registration_Form")
-public class RegistrationForm {
+    public class RegistrationForm {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int registrationId;

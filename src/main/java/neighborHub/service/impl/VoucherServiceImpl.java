@@ -44,7 +44,7 @@ public class VoucherServiceImpl implements VoucherService {
     }
 
     @Override
-    public VoucherDtoResponse updateVoucher(VoucherDtoRequest voucher, Long id)
+    public VoucherDtoResponse updateVoucher(VoucherDtoRequest voucher, int id)
     {
         Voucher voucherById = voucherRepository.findById(id).orElse(null);
 
@@ -61,7 +61,7 @@ public class VoucherServiceImpl implements VoucherService {
     }
 
     @Override
-    public Boolean deleteVoucher(Long id)
+    public Boolean deleteVoucher(int id)
     {
         Voucher voucher = voucherRepository.findById(id).orElse(null);
         if (voucher == null)

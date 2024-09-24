@@ -3,27 +3,26 @@ package neighborHub.model.Entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDate;
-
 @Getter
 @Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "BookingHistory")
-public class BookingHistory {
+@Table(name = "BookingVoucher")
+public class BookingVoucher {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long historyId;
+    private int id;
 
     @ManyToOne
-    @JoinColumn(name = "bookingId", nullable = true)
+    @JoinColumn(name = "bookingId", nullable = false)
     private Booking booking;
 
-    @Column(nullable = true)
-    private String status;
+    @ManyToOne
+    @JoinColumn(name = "voucherId", nullable = false)
+    private Voucher voucher;
 
     @Column(nullable = true)
-    private LocalDate updateTime;
+    private boolean isUsed;
 }

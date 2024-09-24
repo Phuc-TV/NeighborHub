@@ -1,5 +1,6 @@
 package neighborHub.controller;
 
+
 import neighborHub.model.dto.UserDto;
 import neighborHub.model.dto.VoucherDtoRequest;
 import neighborHub.model.dto.VoucherDtoResponse;
@@ -36,7 +37,7 @@ public class VoucherController {
     }
 
     @PutMapping("/UpdateVoucher")
-    public ResponseEntity<VoucherDtoResponse> editInfoStudent(@PathVariable long id, @RequestBody VoucherDtoRequest voucherDtoRequest){
+    public ResponseEntity<VoucherDtoResponse> editInfoStudent(@PathVariable int id, @RequestBody VoucherDtoRequest voucherDtoRequest){
         VoucherDtoResponse editVoucher = voucherService.updateVoucher(voucherDtoRequest, id);
         if(editVoucher != null){
             return new ResponseEntity<>(editVoucher,HttpStatus.ACCEPTED);
@@ -45,7 +46,7 @@ public class VoucherController {
     }
 
     @DeleteMapping("/DeleteVoucher/{id}")
-    public ResponseEntity<String> deleteVoucher(@PathVariable Long id) {
+    public ResponseEntity<String> deleteVoucher(@PathVariable int id) {
         boolean deletionResult = voucherService.deleteVoucher(id);
 
         if (deletionResult) {
