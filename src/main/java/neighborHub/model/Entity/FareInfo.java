@@ -20,5 +20,14 @@ public class FareInfo {
 
     @Column(nullable = true)
     private int vatRate;
+
+    @Column(nullable = true)
+    private String Twilio_Account_sid;
+
+    @Column(nullable = true)
+    private String Twilio_Auth_Token;
+
+    @Column(nullable = true)
+    private String Twilio_Trial_Number;
 }
 

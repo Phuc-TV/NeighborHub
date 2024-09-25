@@ -46,4 +46,10 @@ public class FareInfoServiceImpl implements FareInfoService{
         fareInfoRepository.save(fareInfo);
         return modelMapper.map(fareInfo, FareInfoDtoReponse.class);
     }
+
+    @Override
+    public FareInfo getFareInfo() {
+        // Giả sử lấy bản ghi đầu tiên từ bảng Fare_Info
+        return fareInfoRepository.findById(1L).orElse(null);
+    }
 }

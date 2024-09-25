@@ -1,14 +1,16 @@
 package neighborHub.service.impl;
 
+import com.twilio.Twilio;
 import com.twilio.type.PhoneNumber;
-import neighborHub.config.TwilioConfig;
 import neighborHub.model.dto.OTPRequestDto;
 import neighborHub.model.dto.OTPResponeDto;
 import neighborHub.model.dto.OtpStatus;
+import neighborHub.service.FareInfoService;
 import neighborHub.service.TwilioOTPService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import reactor.core.publisher.Mono;
 import com.twilio.rest.api.v2010.account.Message;
 import java.text.DecimalFormat;
 import java.util.HashMap;
@@ -19,17 +21,19 @@ import java.util.Random;
 public class TwilioOTPServiceImpl implements TwilioOTPService {
 
     @Autowired
-    private TwilioConfig twilioConfig;
+    private FareInfoService fareInfoService;
 
     Map<String, String> otpMap = new HashMap<>();
 
     @Override
-    public Mono<OTPResponeDto> sendOTPForPasswordReset(OTPRequestDto otpRequestDto) {
+    public ResponseEntity<OTPResponeDto> sendOTP(OTPRequestDto otpRequestDto) {
         OTPResponeDto otpResponeDto;
 
         try {
+            Twilio.init(fareInfoService.getFareInfo().getTwilio_Account_sid(),
+                    fareInfoService.getFareInfo().getTwilio_Auth_Token());
             PhoneNumber to = new PhoneNumber(otpRequestDto.getPhoneNumber());
-            PhoneNumber from = new PhoneNumber(twilioConfig.getTrialNumber());
+            PhoneNumber from = new PhoneNumber(fareInfoService.getFareInfo().getTwilio_Trial_Number());
             String otp = generateOTP();
 
             System.out.println("Generated OTP: " + otp); // Ghi log OTP
@@ -43,22 +47,22 @@ public class TwilioOTPServiceImpl implements TwilioOTPService {
         } catch (Exception e) {
             otpResponeDto = new OTPResponeDto(OtpStatus.FAILED, e.getMessage());
         }
-        return Mono.just(otpResponeDto);
+        return new ResponseEntity<>(otpResponeDto, HttpStatus.OK);
     }
 
 
     @Override
-    public Mono<String> validateOTP(String userInputOTP, String phoneNumber) {
+    public ResponseEntity<String> validateOTP(OTPRequestDto otpRequestDto) {
         // Kiểm tra xem phoneNumber có tồn tại trong otpMap không
-        if (!otpMap.containsKey(phoneNumber)) {
-            return Mono.error(new IllegalArgumentException("No OTP found for the given phone number"));
+        if (!otpMap.containsKey(otpRequestDto.getPhoneNumber())) {
+            return new ResponseEntity<>("No OTP found for the given phone number", HttpStatus.NOT_FOUND);
         }
 
         // So sánh userInputOTP với giá trị trong otpMap
-        if (userInputOTP.equals(otpMap.get(phoneNumber))) {
-            return Mono.just("Valid OTP, please proceed");
+        if (otpRequestDto.getOTP().equals(otpMap.get(otpRequestDto.getPhoneNumber()))) {
+            return new ResponseEntity<>("Valid OTP", HttpStatus.OK);
         } else {
-            return Mono.error(new IllegalArgumentException("Invalid OTP, please retry"));
+            return new ResponseEntity<>("Invalid OTP, please retry", HttpStatus.BAD_REQUEST);
         }
     }
 
