@@ -61,4 +61,17 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
         return true;
     }
+
+    @Override
+    public boolean findUserByPhoneNumber(String phoneNumber)
+    {
+        if (userRepository.existsByPhone(phoneNumber))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 }

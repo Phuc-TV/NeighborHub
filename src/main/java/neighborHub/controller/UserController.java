@@ -1,5 +1,6 @@
 package neighborHub.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import neighborHub.model.dto.UserDto;
 import neighborHub.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/user")
 public class UserController {
+    @Autowired
     private UserService userService;
 
     @Autowired
@@ -20,6 +22,7 @@ public class UserController {
         this.userService = userService;
     }
 
+    @SecurityRequirement(name = "Bear Authentication")
     @GetMapping("/viewAll")
     public ResponseEntity<List<UserDto>> viewListAllUsers(){
         try {
@@ -33,6 +36,7 @@ public class UserController {
         }
     }
 
+    @SecurityRequirement(name = "Bear Authentication")
     @PutMapping("/UpdateUser")
     public ResponseEntity<UserDto> editInfoStudent(@PathVariable long id, @RequestBody UserDto userDto){
         UserDto editUser = userService.updateUser(userDto);
@@ -42,6 +46,7 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    @SecurityRequirement(name = "Bear Authentication")
     @DeleteMapping("/DeleteUser/{id}")
     public ResponseEntity<String> deleteUser(@PathVariable Long id) {
         boolean deletionResult = userService.deleteUser(id);
@@ -50,6 +55,21 @@ public class UserController {
             return new ResponseEntity<>("User deleted successfully.", HttpStatus.OK);
         } else {
             return new ResponseEntity<>("Unable to delete User. Please check the UserId.", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/getByPhoneNumber")
+    public ResponseEntity<String> findUserByPhoneNumder(@PathVariable String phoneNumber)
+    {
+        boolean userResult = userService.findUserByPhoneNumber(phoneNumber);
+
+        if (userResult)
+        {
+            return new ResponseEntity<>("User has exist",HttpStatus.OK);
+        }
+        else
+        {
+            return new ResponseEntity<>("User does not exist", HttpStatus.NOT_FOUND);
         }
     }
 }

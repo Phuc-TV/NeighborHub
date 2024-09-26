@@ -1,5 +1,6 @@
 package neighborHub.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import neighborHub.model.Entity.FareInfo;
 import neighborHub.model.dto.FareInfoDtoReponse;
 import neighborHub.service.FareInfoService;
@@ -32,6 +33,7 @@ public class FareInfoController {
         }
     }
 
+    @SecurityRequirement(name = "Bear Authentication")
     @PutMapping("/UpdateFareInfo")
     public ResponseEntity<FareInfoDtoReponse> editInfoStudent(@RequestBody FareInfoDtoReponse fareInfoDtoReponse){
         FareInfoDtoReponse editVoucher = fareInfoService.updateFareInfo(fareInfoDtoReponse);

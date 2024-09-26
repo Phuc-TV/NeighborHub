@@ -1,7 +1,9 @@
 package neighborHub.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import neighborHub.model.dto.BookingDtoResponse;
 import neighborHub.model.dto.TripCostDTO;
+import neighborHub.model.dto.TripCostResponseDto;
 import neighborHub.model.dto.VoucherDtoResponse;
 import neighborHub.service.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,17 +37,11 @@ public class BookingController {
         }
     }
 
-    @GetMapping("/calculateFare")
-    public ResponseEntity<Float> calculateFare(@RequestBody TripCostDTO tripCostDTO)
-    {
-        try
-        {
-            float totalPrice = bookingService.calculateFare(tripCostDTO);
-
-            return new ResponseEntity<>(totalPrice, HttpStatus.OK);
-        }catch (Exception e){
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
+    @SecurityRequirement(name = "Bear Authentication")
+    @PostMapping("/calculateFare")
+    public ResponseEntity<TripCostResponseDto> calculateFare(@RequestBody TripCostDTO tripCostDTO) {
+        return bookingService.calculateFare(tripCostDTO);
     }
+
 }
 

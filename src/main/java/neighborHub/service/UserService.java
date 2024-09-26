@@ -10,4 +10,6 @@ public interface UserService {
     UserDto updateUser(UserDto userDto);
 
     Boolean deleteUser(Long id);
+
+    boolean findUserByPhoneNumber(String phoneNumber);
 }

@@ -37,7 +37,7 @@ public class Booking {
     private int dropoffTime;
 
     @Column(nullable = true)
-    private int distance;
+    private float distance;
 
     @Column(nullable = true)
     private int status;

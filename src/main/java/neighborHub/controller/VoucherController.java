@@ -1,6 +1,7 @@
 package neighborHub.controller;
 
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import neighborHub.model.dto.UserDto;
 import neighborHub.model.dto.VoucherDtoRequest;
 import neighborHub.model.dto.VoucherDtoResponse;
@@ -36,8 +37,24 @@ public class VoucherController {
         }
     }
 
+    @SecurityRequirement(name = "Bear Authentication")
+    @PostMapping("/CreateVoucher")
+    public ResponseEntity<VoucherDtoResponse>  createVoucher (@RequestBody VoucherDtoRequest voucherDtoRequest)
+    {
+        VoucherDtoResponse createVoucer = voucherService.createVoucher(voucherDtoRequest);
+        if (createVoucer != null)
+        {
+            return new ResponseEntity<>(createVoucer,HttpStatus.ACCEPTED);
+        }
+        else
+        {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @SecurityRequirement(name = "Bear Authentication")
     @PutMapping("/UpdateVoucher")
-    public ResponseEntity<VoucherDtoResponse> editInfoStudent(@PathVariable int id, @RequestBody VoucherDtoRequest voucherDtoRequest){
+    public ResponseEntity<VoucherDtoResponse> editVoucher(@PathVariable int id, @RequestBody VoucherDtoRequest voucherDtoRequest){
         VoucherDtoResponse editVoucher = voucherService.updateVoucher(voucherDtoRequest, id);
         if(editVoucher != null){
             return new ResponseEntity<>(editVoucher,HttpStatus.ACCEPTED);
@@ -45,6 +62,7 @@ public class VoucherController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    @SecurityRequirement(name = "Bear Authentication")
     @DeleteMapping("/DeleteVoucher/{id}")
     public ResponseEntity<String> deleteVoucher(@PathVariable int id) {
         boolean deletionResult = voucherService.deleteVoucher(id);

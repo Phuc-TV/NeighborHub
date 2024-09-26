@@ -1,8 +1,6 @@
 package neighborHub.controller;
 
-import com.twilio.Twilio;
-import com.twilio.rest.api.v2010.account.Message;
-import com.twilio.type.PhoneNumber;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import neighborHub.model.dto.OTPRequestDto;
 import neighborHub.model.dto.OTPResponeDto;
 import neighborHub.service.TwilioOTPService;

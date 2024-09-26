@@ -71,7 +71,6 @@ public class SecurityConfig {
                                 .requestMatchers("/swagger-ui/**").permitAll()
                                 .requestMatchers("/v3/api-docs/**").permitAll()
                                 .requestMatchers("/api/v1/OTP/sendOTP").permitAll() // Cho phép quyền truy cập cho người dùng vô danh
-                                .requestMatchers("/api/v1/OTP/sendSMS").permitAll()
                                 .anyRequest().authenticated()
                 ).exceptionHandling((exception) -> exception
                         .authenticationEntryPoint(this.jwtAuthenticationEntryPoint)

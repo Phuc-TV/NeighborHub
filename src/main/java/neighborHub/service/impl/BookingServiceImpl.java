@@ -4,12 +4,15 @@ import neighborHub.model.Entity.Booking;
 import neighborHub.model.Entity.FarePrice;
 import neighborHub.model.dto.BookingDtoResponse;
 import neighborHub.model.dto.TripCostDTO;
+import neighborHub.model.dto.TripCostResponseDto;
 import neighborHub.repository.BookingRepository;
 import neighborHub.repository.FarePriceRepository;
 import neighborHub.repository.VoucherRepository;
 import neighborHub.service.BookingService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -49,23 +52,25 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public float calculateFare(TripCostDTO tripCostDTO) {
+    public ResponseEntity<TripCostResponseDto> calculateFare(TripCostDTO tripCostDTO) {
         try {
+            TripCostResponseDto tripCostResponseDto = new TripCostResponseDto();
+
             FarePrice farePrice = farePriceRepository
                     .findByVehicleType(tripCostDTO.getVehicleType()).orElse(null);
 
             if (farePrice == null)
-                return 0;
+                return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 
             float totalPrice = 0;
 
-            if (tripCostDTO.getDistance() <= 2) {
+            if (tripCostDTO.getDistance() <= 2000) {
                 totalPrice = farePrice.getFareMin2km();
             } else {
                 totalPrice = farePrice.getFareMin2km() + farePrice.getTravelTimeFare()
-                        * (tripCostDTO.getTravelTime().getHour()
-                        + ((float) tripCostDTO.getTravelTime().getMinute() / 60))
-                        + farePrice.getFareNextKm() * (tripCostDTO.getDistance() - 2);
+                        * ((tripCostDTO.getTravelTime().getHour() * 60)
+                        + ((float) tripCostDTO.getTravelTime().getMinute()))
+                        + farePrice.getFareNextKm() * ((tripCostDTO.getDistance() - 2000) / 1000);
             }
 
             if (!tripCostDTO.getListVoucher().isEmpty()) {
@@ -76,9 +81,13 @@ public class BookingServiceImpl implements BookingService {
                 }
             }
 
-            return totalPrice;
+            tripCostResponseDto.setTripCost(totalPrice);
+            tripCostResponseDto.setDistance(tripCostDTO.getDistance() / 1000);
+            tripCostResponseDto.setTravelTime(tripCostDTO.getTravelTime());
+
+            return new ResponseEntity<>(tripCostResponseDto, HttpStatus.OK);
         } catch (Exception e) {
-            return -1;
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
 }
