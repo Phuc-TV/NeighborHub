@@ -58,7 +58,7 @@ public class UserController {
         }
     }
 
-    @GetMapping("/getByPhoneNumber")
+    @GetMapping("/getByPhoneNumber/{phoneNumber}")
     public ResponseEntity<String> findUserByPhoneNumder(@PathVariable String phoneNumber)
     {
         boolean userResult = userService.findUserByPhoneNumber(phoneNumber);
