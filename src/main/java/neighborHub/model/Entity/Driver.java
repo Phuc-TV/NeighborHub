@@ -2,6 +2,7 @@ package neighborHub.model.Entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 @Getter
 @Setter

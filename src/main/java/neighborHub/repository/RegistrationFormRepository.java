@@ -11,4 +11,10 @@ public interface RegistrationFormRepository extends JpaRepository<RegistrationFo
 
     @Query(value = "select * from registration_form where status = true",nativeQuery = true)
     List<RegistrationForm> getAllByStatus();
+
+    @Query(value = "select * from registration_form where driver_id =:driverId",nativeQuery = true)
+    List<RegistrationForm> getAllByDriverId(Long driverId);
+
+    @Query(value = "select * from registration_form where registration_id =:id",nativeQuery = true)
+    RegistrationForm getRegistrationFormById(int id);
 }

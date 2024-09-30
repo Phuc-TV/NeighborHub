@@ -1,10 +1,7 @@
 package neighborHub.controller;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import neighborHub.model.dto.BookingDtoResponse;
-import neighborHub.model.dto.TripCostDTO;
-import neighborHub.model.dto.TripCostResponseDto;
-import neighborHub.model.dto.VoucherDtoResponse;
+import neighborHub.model.dto.*;
 import neighborHub.service.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,9 +36,14 @@ public class BookingController {
 
     @SecurityRequirement(name = "Bear Authentication")
     @PostMapping("/calculateFare")
-    public ResponseEntity<TripCostResponseDto> calculateFare(@RequestBody TripCostDTO tripCostDTO) {
+    public ResponseEntity<List<TripCostResponseDto>> calculateFare(@RequestBody TripCostDTO tripCostDTO) {
         return bookingService.calculateFare(tripCostDTO);
     }
 
+    @GetMapping("/getDriverNearUser")
+    public ResponseEntity<List<DriverResponseDto>> getDriverNearUser(@RequestBody DriverActiveRequestDto dto)
+    {
+        return bookingService.getActiveDriver(dto);
+    }
 }
 

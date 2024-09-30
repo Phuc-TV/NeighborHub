@@ -42,4 +42,17 @@ public class DriverServiceImpl implements DriverService {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
+
+    @Override
+    public ResponseEntity<DriverInfoDtoResponse> getDriverByPhoneNumber(String phoneNumber)
+    {
+        Driver driver = driverRepository.findByPhone(phoneNumber).orElse(null);
+
+        if (driver == null)
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+
+        DriverInfoDtoResponse driverInfoDtoResponse = modelMapper.map(driver, DriverInfoDtoResponse.class);
+
+        return new ResponseEntity<>(driverInfoDtoResponse, HttpStatus.OK);
+    }
 }

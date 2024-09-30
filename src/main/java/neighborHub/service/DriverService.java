@@ -5,4 +5,6 @@ import org.springframework.http.ResponseEntity;
 
 public interface DriverService {
     ResponseEntity<DriverInfoDtoResponse> getDriverById(Long id);
+
+    ResponseEntity<DriverInfoDtoResponse> getDriverByPhoneNumber(String phoneNumber);
 }

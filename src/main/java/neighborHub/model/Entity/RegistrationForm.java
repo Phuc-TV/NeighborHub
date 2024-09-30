@@ -17,6 +17,12 @@ import java.time.LocalDate;
     private int registrationId;
 
     @Column(nullable = true)
+    private String licensePlate;
+
+    @Column(nullable = true)
+    private String vehicleType;
+
+    @Column(nullable = true)
     private String driversLicenseNumber;
 
     @Column(nullable = true)
@@ -42,6 +48,12 @@ import java.time.LocalDate;
 
     @Column(nullable = true)
     private String tin;
+
+    @Column(nullable = true)
+    private double lat;
+
+    @Column(nullable = true)
+    private double lon;
 
     @ManyToOne
     @JoinColumn(name = "driverId", nullable = false)

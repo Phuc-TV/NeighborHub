@@ -26,4 +26,10 @@ public class DriverController {
     public ResponseEntity<DriverInfoDtoResponse> viewDriverInfoById(@PathVariable long id){
         return driverService.getDriverById(id);
     }
+
+    @GetMapping("/getDriverByPhoneNumber/{phone}")
+    public ResponseEntity<DriverInfoDtoResponse> getDriverByPhoneNumber(@PathVariable String phone)
+    {
+        return driverService.getDriverByPhoneNumber(phone);
+    }
 }
