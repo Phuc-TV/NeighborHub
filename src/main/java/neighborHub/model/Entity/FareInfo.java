@@ -28,6 +28,6 @@ public class FareInfo {
     private String Twilio_Auth_Token;
 
     @Column(nullable = true)
-    private String Twilio_Trial_Number;
+    private String Twilio_VerifyService_Sid;
 }
 

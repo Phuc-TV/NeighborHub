@@ -70,7 +70,8 @@ public class SecurityConfig {
                                 .requestMatchers("/api/v1/auth/**").permitAll()
                                 .requestMatchers("/swagger-ui/**").permitAll()
                                 .requestMatchers("/v3/api-docs/**").permitAll()
-                                .requestMatchers("/api/v1/OTP/sendOTP").permitAll() // Cho phép quyền truy cập cho người dùng vô danh
+                                .requestMatchers("/api/v1/OTP/start-verification").permitAll() // Cho phép quyền truy cập cho người dùng vô danh
+                                .requestMatchers("/api/v1/OTP/check-verification").permitAll()
                                 .anyRequest().authenticated()
                 ).exceptionHandling((exception) -> exception
                         .authenticationEntryPoint(this.jwtAuthenticationEntryPoint) // Sử dụng JwtAuthenticationEntryPoint tùy chỉnh
