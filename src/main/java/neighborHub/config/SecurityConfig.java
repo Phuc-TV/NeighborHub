@@ -73,7 +73,7 @@ public class SecurityConfig {
                                 .requestMatchers("/api/v1/OTP/sendOTP").permitAll() // Cho phép quyền truy cập cho người dùng vô danh
                                 .anyRequest().authenticated()
                 ).exceptionHandling((exception) -> exception
-                        .authenticationEntryPoint(this.jwtAuthenticationEntryPoint)
+                        .authenticationEntryPoint(this.jwtAuthenticationEntryPoint) // Sử dụng JwtAuthenticationEntryPoint tùy chỉnh
                 ).sessionManagement((session) -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 );

@@ -9,7 +9,7 @@ import neighborHub.model.resquestModel.AuthenticationResponse;
 import java.io.IOException;
 
 public interface AuthService {
-    AuthenticationResponse userLogin(LoginDto loginDto);
+    AuthenticationResponse userLogin(LoginDto loginDto, HttpServletRequest request);
     String userSignup(SignupDto signupDto);
     AuthenticationResponse refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException;
 }

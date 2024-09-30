@@ -28,10 +28,11 @@ public class AuthController {
     }
 
     @PostMapping(value = {"/login", "/signin"})
-    public ResponseEntity<AuthenticationResponse> login(@Valid @RequestBody LoginDto loginDto){
-        AuthenticationResponse token = authService.userLogin(loginDto);
-        return  ResponseEntity.ok(token);
+    public ResponseEntity<AuthenticationResponse> login(@Valid @RequestBody LoginDto loginDto, HttpServletRequest request){
+        AuthenticationResponse token = authService.userLogin(loginDto, request);
+        return ResponseEntity.ok(token);
     }
+
 
     @PostMapping(value = {"/signup", "/register"})
     public ResponseEntity<String> signup(@Valid @RequestBody SignupDto signupDto){

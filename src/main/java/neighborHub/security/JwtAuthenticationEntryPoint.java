@@ -12,10 +12,15 @@ import java.io.IOException;
 @Component
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
     @Override
-    public void commence(HttpServletRequest request,
-                         HttpServletResponse response,
-                         AuthenticationException authException) throws IOException, ServletException {
-        // send back to client the stack trace of error
-        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, authException.getMessage());
+    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException {
+        String errorMessage = (String) request.getAttribute("errorMessage");
+
+        if (errorMessage == null) {
+            errorMessage = "Unauthorized: Invalid login details"; // Thông báo mặc định
+        }
+
+        response.setContentType("application/json");
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        response.getOutputStream().println("{ \"error\": \"" + errorMessage + "\" }");
     }
 }

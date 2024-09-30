@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -55,26 +56,42 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public AuthenticationResponse userLogin(LoginDto loginDto) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginDto.getPhoneOrEmail(), loginDto.getPassword()));
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+    public AuthenticationResponse userLogin(LoginDto loginDto, HttpServletRequest request) {
+        // Kiểm tra số điện thoại/email tồn tại trước khi xác thực
         User user = userRepository.findByPhoneOrEmail(loginDto.getPhoneOrEmail(), loginDto.getPhoneOrEmail())
-                .orElseThrow(() -> new ApiException(HttpStatus.BAD_REQUEST, "User not found"));
-        String accessToken = jwtTokenProvider.generateAccessToken(authentication);
-        String refreshToken = jwtTokenProvider.generateRefreshToken(authentication);
+                .orElseThrow(() -> {
+                    request.setAttribute("errorMessage", "Wrong phone");
+                    return new ApiException(HttpStatus.BAD_REQUEST, "Wrong phone");
+                });
 
-        revokeRefreshToken(accessToken);
-        RefreshToken savedRefreshToken = saveUserRefreshToken(refreshToken);
+        try {
+            // Nếu người dùng tồn tại, tiếp tục xác thực mật khẩu
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(loginDto.getPhoneOrEmail(), loginDto.getPassword()));
+            SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        revokeAllUserAccessTokens(user);
-        saveUserAccessToken(user, accessToken, savedRefreshToken);
+            String accessToken = jwtTokenProvider.generateAccessToken(authentication);
+            String refreshToken = jwtTokenProvider.generateRefreshToken(authentication);
 
-        return AuthenticationResponse.builder()
-                .accessToken(accessToken)
-                .refreshToken(refreshToken)
-                .build();
+            revokeRefreshToken(accessToken);
+            RefreshToken savedRefreshToken = saveUserRefreshToken(refreshToken);
+
+            revokeAllUserAccessTokens(user);
+            saveUserAccessToken(user, accessToken, savedRefreshToken);
+
+            return AuthenticationResponse.builder()
+                    .accessToken(accessToken)
+                    .refreshToken(refreshToken)
+                    .build();
+        } catch (BadCredentialsException ex) {
+            // Bắt lỗi mật khẩu sai
+            request.setAttribute("errorMessage", "Wrong password");
+            throw new ApiException(HttpStatus.UNAUTHORIZED, "Wrong password");
+        }
     }
+
+
+
 
     private void revokeRefreshToken(String accessToken) {
         AccessToken token = accessTokenRepository.findByToken(accessToken);

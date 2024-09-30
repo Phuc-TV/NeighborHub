@@ -25,16 +25,17 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String usernameOrEmail) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String phone) throws UsernameNotFoundException {
         //allow user to log in by username or email
-        User user = userRepository.findByPhoneOrEmail(usernameOrEmail, usernameOrEmail)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found with username or email: " + usernameOrEmail));
+        User user = userRepository.findByPhoneOrEmail(phone, phone)
+                .orElseThrow(() -> new UsernameNotFoundException("Wrong phone"));
+
 
         GrantedAuthority authority = new SimpleGrantedAuthority(user.getRole());
 
         Set<GrantedAuthority> authorities = new HashSet<>();
         authorities.add(authority);
 
-        return new org.springframework.security.core.userdetails.User(usernameOrEmail, user.getPassword(), authorities);
+        return new org.springframework.security.core.userdetails.User(phone, user.getPassword(), authorities);
     }
 }
