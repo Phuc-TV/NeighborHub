@@ -68,15 +68,13 @@ public class BookingServiceImpl implements BookingService {
             if (farePriceList == null)
                 return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 
-            for (FarePrice farePrice: farePriceList )
-            {
+            for (FarePrice farePrice : farePriceList) {
                 float totalPrice = 0;
                 if (tripCostDTO.getDistance() <= 2000) {
                     totalPrice = farePrice.getFareMin2km();
                 } else {
-                    totalPrice = farePrice.getFareMin2km() + farePrice.getTravelTimeFare()
-                            * ((tripCostDTO.getTravelTime().getHour() * 60)
-                            + ((float) tripCostDTO.getTravelTime().getMinute()))
+                    totalPrice = farePrice.getFareMin2km()
+                            + farePrice.getTravelTimeFare() * (tripCostDTO.getTravelTimeSeconds() / 60f)
                             + farePrice.getFareNextKm() * ((tripCostDTO.getDistance() - 2000) / 1000);
                 }
 
@@ -84,16 +82,15 @@ public class BookingServiceImpl implements BookingService {
                     for (int i = 0; i < tripCostDTO.getListVoucher().size(); i++) {
                         float discount = voucherRepository.findByVoucherId(
                                 tripCostDTO.getListVoucher().get(i)).orElse(null).getDiscount();
-                        totalPrice = totalPrice * (1 - discount/100);
+                        totalPrice = totalPrice * (1 - discount / 100);
                     }
                 }
 
                 TripCostResponseDto tripCostResponseDto = new TripCostResponseDto();
 
-
                 tripCostResponseDto.setTripCost(totalPrice);
                 tripCostResponseDto.setDistance(tripCostDTO.getDistance() / 1000);
-                tripCostResponseDto.setTravelTime(tripCostDTO.getTravelTime());
+                tripCostResponseDto.setTravelTimeSeconds(tripCostDTO.getTravelTimeSeconds());
                 tripCostResponseDto.setVehicleType(farePrice.getVehicleType());
 
                 tripCostResponseDtoList.add(tripCostResponseDto);
@@ -104,6 +101,7 @@ public class BookingServiceImpl implements BookingService {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
+
 
     @Override
     public ResponseEntity<List<DriverResponseDto>> getActiveDriver(DriverActiveRequestDto dto)

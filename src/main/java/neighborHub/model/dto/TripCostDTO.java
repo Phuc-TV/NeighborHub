@@ -15,6 +15,6 @@ import java.util.List;
 @AllArgsConstructor
 public class TripCostDTO {
     private float distance;
-    private LocalDateTime travelTime;
+    private long  travelTimeSeconds;
     private List<Integer> listVoucher;
 }

@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class TripCostResponseDto {
     private float distance;
-    private LocalDateTime travelTime;
+    private long travelTimeSeconds;
     private float tripCost;
     private String vehicleType;
 }
