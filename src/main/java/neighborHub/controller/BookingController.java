@@ -68,7 +68,7 @@ public class BookingController {
 
     @SecurityRequirement(name = "Bear Authentication")
     @PutMapping("createAdvanceBookingComplete")
-    public ResponseEntity<String> createAdvanceBookingComplete(AdvanceBookingCompleteDtoRequest advanceBookingCompleteDtoRequest)
+    public ResponseEntity<String> createAdvanceBookingComplete(@RequestBody  AdvanceBookingCompleteDtoRequest advanceBookingCompleteDtoRequest)
     {
         return bookingService.createAdvanceBookingComplete(advanceBookingCompleteDtoRequest);
     }
