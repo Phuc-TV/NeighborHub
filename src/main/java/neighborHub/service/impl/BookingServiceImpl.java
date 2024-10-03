@@ -210,4 +210,19 @@ public class BookingServiceImpl implements BookingService {
 
         return new ResponseEntity<>(booking, HttpStatus.OK);
     }
+
+    @Override
+    public ResponseEntity<String> addDriver(int registrationFormId, int bookingId) {
+        Booking booking = bookingRepository.findById(bookingId).orElse(null);
+
+        booking.setStatus("BookingComplete");
+
+        RegistrationForm registrationForm = registrationFormRepository
+                .getRegistrationFormById(registrationFormId);
+
+        booking.setRegistration(registrationForm);
+
+        bookingRepository.save(booking);
+        return new ResponseEntity<>("Add Driver successfully", HttpStatus.OK);
+    }
 }

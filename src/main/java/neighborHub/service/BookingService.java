@@ -21,4 +21,6 @@ public interface BookingService {
     ResponseEntity<String> createAdvanceBookingComplete(AdvanceBookingCompleteDtoRequest advanceBookingDtoRequest);
 
     ResponseEntity<List<BookingDtoResponse>> getBookingByUserId(Long userId);
+
+    ResponseEntity<String> addDriver(int registrationFormId, int bookingId);
 }

@@ -78,5 +78,12 @@ public class BookingController {
     {
         return bookingService.getBookingByUserId(userId);
     }
+
+    @SecurityRequirement(name = "Bear Authentication")
+    @PutMapping("addDriver/{registrationId}/{bookingId}")
+    public ResponseEntity<String> addDriver (@PathVariable int registrationFormId, @PathVariable int bookingId)
+    {
+        return bookingService.addDriver(registrationFormId, bookingId);
+    }
 }
 

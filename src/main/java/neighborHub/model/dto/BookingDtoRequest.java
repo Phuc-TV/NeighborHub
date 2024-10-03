@@ -17,5 +17,4 @@ public class BookingDtoRequest {
     private LocalDateTime pickupTime;
     private float distance;
     private Long userId;
-    private Long registrationFormId;
 }
