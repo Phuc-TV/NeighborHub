@@ -2,6 +2,8 @@ package neighborHub.model.Entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -31,16 +33,16 @@ public class Booking {
     private String dropoffLocation;
 
     @Column(nullable = true)
-    private int pickupTime;
+    private LocalDateTime pickupTime;
 
     @Column(nullable = true)
-    private int dropoffTime;
+    private LocalDateTime dropoffTime;
 
     @Column(nullable = true)
     private float distance;
 
     @Column(nullable = true)
-    private int status;
+    private String status;
 
     @ManyToMany
     @JoinTable(

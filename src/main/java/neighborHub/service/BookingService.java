@@ -11,4 +11,14 @@ public interface BookingService {
     ResponseEntity<List<TripCostResponseDto>> calculateFare(TripCostDTO tripCostDTO);
 
     ResponseEntity<List<DriverResponseDto>> getActiveDriver(DriverActiveRequestDto dto);
+
+    ResponseEntity<String> createBooking(BookingDtoRequest bookingDtoRequest);
+
+    ResponseEntity<String> createAdvanceBooking(AdvanceBookingDtoRequest advanceBookingDtoRequest);
+
+    ResponseEntity<List<AdvanceBookingDtoResponse>> listAdvanceBooking();
+
+    ResponseEntity<String> createAdvanceBookingComplete(AdvanceBookingCompleteDtoRequest advanceBookingDtoRequest);
+
+    ResponseEntity<List<BookingDtoResponse>> getBookingByUserId(Long userId);
 }

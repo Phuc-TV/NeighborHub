@@ -45,5 +45,38 @@ public class BookingController {
     {
         return bookingService.getActiveDriver(dto);
     }
+
+    @SecurityRequirement(name = "Bear Authentication")
+    @PostMapping("createBooking")
+    public ResponseEntity<String> createBooking(@RequestBody BookingDtoRequest bookingDtoRequest)
+    {
+        return bookingService.createBooking(bookingDtoRequest);
+    }
+
+    @SecurityRequirement(name = "Bear Authentication")
+    @PostMapping("createAdvanceBooking")
+    public ResponseEntity<String> createAdvanceBooking(@RequestBody AdvanceBookingDtoRequest advanceBookingDtoRequest)
+    {
+        return bookingService.createAdvanceBooking(advanceBookingDtoRequest);
+    }
+
+    @GetMapping("listAdvanceBooking")
+    public ResponseEntity<List<AdvanceBookingDtoResponse>> listAdvanceBooking()
+    {
+        return bookingService.listAdvanceBooking();
+    }
+
+    @SecurityRequirement(name = "Bear Authentication")
+    @PutMapping("createAdvanceBookingComplete")
+    public ResponseEntity<String> createAdvanceBookingComplete(AdvanceBookingCompleteDtoRequest advanceBookingCompleteDtoRequest)
+    {
+        return bookingService.createAdvanceBookingComplete(advanceBookingCompleteDtoRequest);
+    }
+
+    @GetMapping("getBookingByUserId/{userId}")
+    public ResponseEntity<List<BookingDtoResponse>> getBookingByUserId(@PathVariable Long userId)
+    {
+        return bookingService.getBookingByUserId(userId);
+    }
 }
 

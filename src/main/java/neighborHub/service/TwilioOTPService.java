@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 public interface TwilioOTPService {
 
     // Start a new verification
-    Verification startVerification(String toPhoneNumber, String channel);
+    Verification startVerification(String toPhoneNumber);
 
     // Check a verification
     VerificationCheck checkVerification(String toPhoneNumber, String code);

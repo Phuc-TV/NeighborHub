@@ -86,14 +86,14 @@ public class TwilioOTPServiceImpl implements TwilioOTPService {
 
     @Override
     // Start a new verification
-    public Verification startVerification(String toPhoneNumber, String channel) {
+    public Verification startVerification(String toPhoneNumber) {
         Twilio.init(fareInfoService.getFareInfo().getTwilio_Account_sid(),
                 fareInfoService.getFareInfo().getTwilio_Auth_Token());
 
         return Verification.creator(
                 fareInfoService.getFareInfo().getTwilio_VerifyService_Sid(),
-                toPhoneNumber,
-                channel
+                convertToInternationalFormat(toPhoneNumber),
+                "sms"
         ).create();
     }
 
@@ -105,10 +105,19 @@ public class TwilioOTPServiceImpl implements TwilioOTPService {
 
         return VerificationCheck.creator(
                         fareInfoService.getFareInfo().getTwilio_VerifyService_Sid()
-                ).setTo(toPhoneNumber)
+                ).setTo(convertToInternationalFormat(toPhoneNumber))
                 .setCode(code)
                 .create();
     }
+
+    public String convertToInternationalFormat(String phoneNumber)
+    {
+        if (phoneNumber.startsWith("0")) {
+            return phoneNumber.replaceFirst("0", "+84");
+        }
+        return phoneNumber;
+    }
+
 
     @Override
     // Fetch a specific verification status

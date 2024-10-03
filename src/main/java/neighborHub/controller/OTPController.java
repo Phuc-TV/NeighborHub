@@ -29,8 +29,8 @@ public class OTPController {
     // Endpoint to start a new verification
     @SecurityRequirement(name = "Bear Authentication")
     @PostMapping("/start-verification")
-    public ResponseEntity<?> startVerification(@RequestParam String toPhoneNumber, @RequestParam String channel) {
-        var verification = twilioOTPService.startVerification(toPhoneNumber, channel);
+    public ResponseEntity<?> startVerification(@RequestParam String toPhoneNumber) {
+        var verification = twilioOTPService.startVerification(toPhoneNumber);
         return ResponseEntity.ok(verification);
     }
 

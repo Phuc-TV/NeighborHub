@@ -13,6 +13,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Boolean existsByEmail(String email);
     Boolean existsByPhone(String phone);
 
+    Optional<User> findByUserId(Long userId);
+
     @Query(value = "select * from User",nativeQuery = true)
     List<User> getAll();
 }
