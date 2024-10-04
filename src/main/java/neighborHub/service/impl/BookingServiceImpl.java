@@ -148,6 +148,7 @@ public class BookingServiceImpl implements BookingService {
     {
         Booking booking = modelMapper.map(advanceBookingDtoRequest, Booking.class);
 
+        booking.setBookingId(0);
         booking.setStatus("AdvanceBooking");
 
         bookingRepository.save(booking);

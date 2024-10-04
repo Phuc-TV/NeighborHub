@@ -41,10 +41,13 @@ public class BookingController {
     }
 
     @GetMapping("/getDriverNearUser")
-    public ResponseEntity<List<DriverResponseDto>> getDriverNearUser(@RequestBody DriverActiveRequestDto dto)
-    {
+    public ResponseEntity<List<DriverResponseDto>> getDriverNearUser(
+            @RequestParam double userLat,
+            @RequestParam double userLon) {
+        DriverActiveRequestDto dto = new DriverActiveRequestDto(userLat, userLon);
         return bookingService.getActiveDriver(dto);
     }
+
 
     @SecurityRequirement(name = "Bear Authentication")
     @PostMapping("createBooking")
@@ -80,9 +83,8 @@ public class BookingController {
     }
 
     @SecurityRequirement(name = "Bear Authentication")
-    @PutMapping("addDriver/{registrationId}/{bookingId}")
-    public ResponseEntity<String> addDriver (@PathVariable int registrationFormId, @PathVariable int bookingId)
-    {
+    @PostMapping("/addDriver/{registrationFormId}/{bookingId}")
+    public ResponseEntity<String> addDriver(@PathVariable int registrationFormId, @PathVariable int bookingId) {
         return bookingService.addDriver(registrationFormId, bookingId);
     }
 

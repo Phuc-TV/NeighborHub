@@ -14,4 +14,6 @@ public interface BookingRepository extends JpaRepository<Booking, Integer> {
     List<Booking> getAdvanceBooking();
 
     List<Booking> findBookingByUser(User user);
+
+
 }
