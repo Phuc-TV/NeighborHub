@@ -12,7 +12,7 @@ public interface BookingService {
 
     ResponseEntity<List<DriverResponseDto>> getActiveDriver(DriverActiveRequestDto dto);
 
-    ResponseEntity<String> createBooking(BookingDtoRequest bookingDtoRequest);
+    ResponseEntity<BookingDtoResponse> createBooking(BookingDtoRequest bookingDtoRequest);
 
     ResponseEntity<String> createAdvanceBooking(AdvanceBookingDtoRequest advanceBookingDtoRequest);
 

@@ -51,7 +51,7 @@ public class BookingController {
 
     @SecurityRequirement(name = "Bear Authentication")
     @PostMapping("createBooking")
-    public ResponseEntity<String> createBooking(@RequestBody BookingDtoRequest bookingDtoRequest)
+    public ResponseEntity<BookingDtoResponse> createBooking(@RequestBody BookingDtoRequest bookingDtoRequest)
     {
         return bookingService.createBooking(bookingDtoRequest);
     }

@@ -8,6 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DriverInfoDtoResponse {
+    private Long driverId;
     private String username;
 
     private String phone;

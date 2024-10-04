@@ -133,13 +133,15 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public ResponseEntity<String> createBooking(BookingDtoRequest bookingDtoRequest) {
+    public ResponseEntity<BookingDtoResponse> createBooking(BookingDtoRequest bookingDtoRequest) {
         Booking booking = modelMapper.map(bookingDtoRequest, Booking.class);
 
         booking.setStatus("booking");
 
         bookingRepository.save(booking);
-        return new ResponseEntity<>("Save successfully", HttpStatus.OK);
+
+        BookingDtoResponse bookingDtoResponse = modelMapper.map(booking, BookingDtoResponse.class);
+        return new ResponseEntity<>(bookingDtoResponse, HttpStatus.OK);
     }
 
 
