@@ -84,14 +84,6 @@ public class BookingServiceImpl implements BookingService {
                             + farePrice.getFareNextKm() * ((tripCostDTO.getDistance() - 2000) / 1000);
                 }
 
-                if (!tripCostDTO.getListVoucher().isEmpty()) {
-                    for (int i = 0; i < tripCostDTO.getListVoucher().size(); i++) {
-                        float discount = voucherRepository.findByVoucherId(
-                                tripCostDTO.getListVoucher().get(i)).orElse(null).getDiscount();
-                        totalPrice = totalPrice * (1 - discount / 100);
-                    }
-                }
-
                 TripCostResponseDto tripCostResponseDto = new TripCostResponseDto();
 
                 tripCostResponseDto.setTripCost(totalPrice);
@@ -224,5 +216,26 @@ public class BookingServiceImpl implements BookingService {
 
         bookingRepository.save(booking);
         return new ResponseEntity<>("Add Driver successfully", HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<Float> totalPrice(TotalPriceDtoRequest totalPriceDtoRequest)
+    {
+        try
+        {
+            float totalPrice = totalPriceDtoRequest.getTripCost();
+            if (!totalPriceDtoRequest.getListVoucher().isEmpty()) {
+                for (int i = 0; i < totalPriceDtoRequest.getListVoucher().size(); i++) {
+                    float discount = voucherRepository.findByVoucherId(
+                            totalPriceDtoRequest.getListVoucher().get(i)).orElse(null).getDiscount();
+                    totalPrice = totalPrice * (1 - discount / 100);
+                }
+            }
+
+            return new ResponseEntity<>(totalPrice, HttpStatus.OK);
+        } catch (Exception e)
+        {
+            return new ResponseEntity<>(0F, HttpStatus.BAD_REQUEST);
+        }
     }
 }

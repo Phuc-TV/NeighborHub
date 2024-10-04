@@ -16,5 +16,4 @@ import java.util.List;
 public class TripCostDTO {
     private float distance;
     private long  travelTimeSeconds;
-    private List<Integer> listVoucher;
 }

@@ -85,5 +85,11 @@ public class BookingController {
     {
         return bookingService.addDriver(registrationFormId, bookingId);
     }
+
+    @GetMapping("totalPrice")
+    public ResponseEntity<Float> totalPrice(@RequestBody TotalPriceDtoRequest totalPriceDtoRequest)
+    {
+        return bookingService.totalPrice(totalPriceDtoRequest);
+    }
 }
 
