@@ -207,18 +207,20 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public ResponseEntity<String> addDriver(int registrationFormId, int bookingId) {
-        Booking booking = bookingRepository.findById(bookingId).orElse(null);
+    public ResponseEntity<BookingDtoResponse> addDriver(AddDriverBookingDtoRequest driverBookingDtoRequest) {
+        Booking booking = bookingRepository.findById(driverBookingDtoRequest.getBookingId()).orElse(null);
 
         booking.setStatus("BookingComplete");
 
         RegistrationForm registrationForm = registrationFormRepository
-                .getRegistrationFormById(registrationFormId);
+                .getRegistrationFormById(driverBookingDtoRequest.getRegistrationFormId());
 
         booking.setRegistration(registrationForm);
 
         bookingRepository.save(booking);
-        return new ResponseEntity<>("Add Driver successfully", HttpStatus.OK);
+
+        BookingDtoResponse bookingDtoResponse = modelMapper.map(booking, BookingDtoResponse.class);
+        return new ResponseEntity<>(bookingDtoResponse, HttpStatus.OK);
     }
 
     @Override

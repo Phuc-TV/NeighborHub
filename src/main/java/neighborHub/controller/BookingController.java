@@ -83,9 +83,9 @@ public class BookingController {
     }
 
     @SecurityRequirement(name = "Bear Authentication")
-    @PostMapping("/addDriver/{registrationFormId}/{bookingId}")
-    public ResponseEntity<String> addDriver(@PathVariable int registrationFormId, @PathVariable int bookingId) {
-        return bookingService.addDriver(registrationFormId, bookingId);
+    @PostMapping("/addDriver")
+    public ResponseEntity<BookingDtoResponse> addDriver(@RequestBody AddDriverBookingDtoRequest addDriverBookingDtoRequest) {
+        return bookingService.addDriver(addDriverBookingDtoRequest);
     }
 
     @GetMapping("/totalPrice")
