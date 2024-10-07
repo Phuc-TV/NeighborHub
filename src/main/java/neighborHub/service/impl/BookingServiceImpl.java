@@ -241,4 +241,14 @@ public class BookingServiceImpl implements BookingService {
             return new ResponseEntity<>(0F, HttpStatus.BAD_REQUEST);
         }
     }
+
+    @Override
+    public ResponseEntity<BookingDtoResponse> getBookingById(int bookingId)
+    {
+        Booking booking = bookingRepository.findById(bookingId).orElse(null);
+
+        BookingDtoResponse bookingDtoResponse = modelMapper.map(booking, BookingDtoResponse.class);
+
+        return new ResponseEntity<>(bookingDtoResponse, HttpStatus.OK);
+    }
 }

@@ -88,10 +88,16 @@ public class BookingController {
         return bookingService.addDriver(registrationFormId, bookingId);
     }
 
-    @GetMapping("totalPrice")
+    @GetMapping("/totalPrice")
     public ResponseEntity<Float> totalPrice(@RequestBody TotalPriceDtoRequest totalPriceDtoRequest)
     {
         return bookingService.totalPrice(totalPriceDtoRequest);
+    }
+
+    @GetMapping("/getBookingById/{bookingId}")
+    public ResponseEntity<BookingDtoResponse> getBookingById(@PathVariable int bookingId)
+    {
+        return bookingService.getBookingById(bookingId);
     }
 }
 

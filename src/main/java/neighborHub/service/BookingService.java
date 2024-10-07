@@ -25,4 +25,6 @@ public interface BookingService {
     ResponseEntity<String> addDriver(int registrationFormId, int bookingId);
 
     ResponseEntity<Float> totalPrice(TotalPriceDtoRequest totalPriceDtoRequest);
+
+    ResponseEntity<BookingDtoResponse> getBookingById(int bookingId);
 }
